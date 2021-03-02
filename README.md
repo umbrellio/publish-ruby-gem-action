@@ -1,5 +1,7 @@
 # Publish Ruby Gem GitHub Action
 
+This simple action will search for all `*.gemspec` files in working directory, and then build and push a gem for each of them, using the API token that you should provide in the `api-key` parameter. A good way to store it is using Github [Encrypted secrets](https://docs.github.com/en/actions/reference/encrypted-secrets) and [Environments](https://docs.github.com/en/actions/reference/environments) features.
+
 Example usage:
 
 ```yaml
