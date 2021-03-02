@@ -5,13 +5,18 @@ branding:
   icon: upload-cloud
   color: red
 inputs:
-  api_key:
+  api-key:
     description: Rubygems.org API key
     required: true
+  working-directory:
+    description: Working dicrectory
+    required: false
+    default: .
 runs:
   using: composite
   steps:
     - run: ruby $GITHUB_ACTION_PATH/main.rb
       shell: bash
       env:
-        GEM_HOST_API_KEY: ${{inputs.api_key}}
+        GEM_HOST_API_KEY: ${{inputs.api-key}}
+        WORKDIR: ${{inputs.working-directory}}
