@@ -1,0 +1,17 @@
+name: Publish a Ruby gem
+description: Build and publish a Ruby gem
+author: Umbrellio
+branding:
+  icon: upload-cloud
+  color: red
+inputs:
+  api_key:
+    description: Rubygems.org API key
+    required: true
+runs:
+  using: composite
+  steps:
+    - run: ruby $GITHUB_ACTION_PATH/main.rb
+      shell: bash
+      env:
+        GEM_HOST_API_KEY: ${{inputs.api_key}}
