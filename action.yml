@@ -9,7 +9,7 @@ inputs:
     description: Rubygems.org API key
     required: true
   working-directory:
-    description: Working dicrectory
+    description: Working directory
     required: false
     default: .
 runs:
