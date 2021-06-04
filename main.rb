@@ -8,6 +8,8 @@ def system!(*cmd)
   Tempfile.create do |tempfile|
     begin
       system(*cmd, out: tempfile, exception: true)
+      tempfile.rewind
+      puts tempfile.read
     rescue => error
       tempfile.rewind
       output = tempfile.read
