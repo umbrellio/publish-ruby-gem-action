@@ -1,8 +1,19 @@
 # frozen_string_literal: true
 
+require "tempfile"
+
 def system!(*cmd)
   puts "Running #{cmd.inspect}"
-  system(*cmd, exception: true)
+
+  Tempfile.create do |tempfile|
+    begin
+      system(*cmd, out: tempfile, exception: true)
+    rescue => error
+      tempfile.rewind
+      output = tempfile.read
+      raise "Failed to run command. Got exception: #{error.inspect}. Command output:\n#{output}"
+    end
+  end
 end
 
 workdir = ENV.fetch("WORKDIR", ".")
@@ -17,6 +28,10 @@ Dir.glob("*.gemspec").each do |gemspec_file|
   begin
     system!("gem", "push", gem_file)
   rescue => error
-    raise unless error.message.include?("Repushing of gem versions is not allowed")
+    if error.message.include?("Repushing of gem versions is not allowed")
+      warn "Gem with this version already exists"
+    else
+      raise
+    end
   end
 end
